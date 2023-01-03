@@ -6,6 +6,7 @@ namespace App\Dto\Company;
 
 class CompanyDto implements \JsonSerializable
 {
+
     private ?int $id;
     private string $name;
     private string $description;
@@ -55,5 +56,6 @@ class CompanyDto implements \JsonSerializable
     {
         return get_object_vars($this);
     }
+
 }
 

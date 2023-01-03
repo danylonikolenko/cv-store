@@ -8,13 +8,9 @@ class ResponseDto
 {
 
     private bool $status;
-
     private mixed $result;
-
     private int $statusCode;
-
     private mixed $description;
-
     private array $additionalParams;
 
     public function __construct(bool $status, $result, mixed $description = '', $statusCode = 200, array $additionalParams = [])

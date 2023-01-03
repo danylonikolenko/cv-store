@@ -1,23 +1,21 @@
 <?php
 
 
-namespace App\Dto;
+namespace App\Dto\User;
 
 
 class UserDto implements \JsonSerializable
 {
-    private string $name;
 
+    private string $email;
     private ?int $role_id;
-
     private bool $deleted;
-
     private int $id;
 
-    public function __construct(int $id, string $name, int $role_id = null, bool $deleted = false)
+    public function __construct(int $id, string $email, int $role_id = null, bool $deleted = false)
     {
         $this->id = $id;
-        $this->name = $name;
+        $this->email = $email;
         $this->role_id = $role_id;
         $this->deleted = $deleted;
     }
@@ -25,9 +23,9 @@ class UserDto implements \JsonSerializable
     /**
      * @return string
      */
-    public function getName(): string
+    public function getEmail(): string
     {
-        return $this->name;
+        return $this->email;
     }
 
     /**
