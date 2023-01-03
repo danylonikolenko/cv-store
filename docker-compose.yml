@@ -1,0 +1,79 @@
+version: '3'
+services:
+
+    #PHP Service
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: app
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+
+        networks:
+            - app-network
+
+    #Nginx Service
+    webserver:
+        image: nginx:alpine
+        container_name: webserver
+        restart: unless-stopped
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - ./:/var/www
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+        networks:
+            - app-network
+
+    #MySQL Service
+    mysql:
+        image: mariadb:10.5.8
+        container_name: mysql
+        restart: unless-stopped
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: laravel
+            MYSQL_USER: root
+            MYSQL_PASSWORD: root
+            MYSQL_ROOT_PASSWORD: root
+        networks:
+            - app-network
+
+        volumes:
+            - dbdata:/var/lib/mysql/
+
+
+    #Redis Service
+    redis:
+        image: redis:latest
+        container_name: redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - redis-data:/data
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
+    #Volumes
+volumes:
+    dbdata:
+        driver: local
+    redis-data:
+
+    #Mail Service
+#  mailhog:
+#    container_name: optbox1_mailhog
+#    image: mailhog/mailhog
+#    restart: unless-stopped
+#    ports:
+#      - "12383:8025"
+#    cpus: 0.15
+#    mem_limit: 128m
