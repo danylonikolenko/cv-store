@@ -15,3 +15,4 @@ RUN docker-compose up -d
 #composer dump-autoload
 
 RUN php artisan migrate
+RUN php artisan db:seed
