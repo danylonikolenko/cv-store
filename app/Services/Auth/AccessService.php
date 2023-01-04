@@ -12,8 +12,14 @@ use App\Models\User;
 class AccessService
 {
 
-    public function checkAccess(User $user, string $class_name, string $function_name): bool
+    public function checkAccess(int $userId, string $class_name, string $function_name): bool
     {
+        $user = User::find($userId);
+
+        if ($user->role->name === 'admin') {
+            return true;
+        }
+
         $permissions = $this->getUserPermissions($user);
 
         foreach ($permissions as $permission) {

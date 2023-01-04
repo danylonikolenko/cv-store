@@ -17,7 +17,7 @@ class UserService
         $this->userTransformer = $userTransformer;
     }
 
-    public function create(string $email, string $password, int $roleId = null)
+    public function create(string $email, string $password, int $roleId = null): array
     {
         $user = new User();
         $user->email = $email;

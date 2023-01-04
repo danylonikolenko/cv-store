@@ -22,14 +22,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('ping', [PingController::class, 'ping']);
 
 Route::group([
-    'middleware' => [],
+    'middleware' => ['api'],
+    'prefix' => 'auth'
 ], function ($router) {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('registration', [AuthController::class, 'registration']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
 });
 
+
 Route::group([
-    'middleware' => ['api', 'auth'],
+    'middleware' => ['api', 'auth', 'check.access'],
 ], function ($router) {
     Route::group([
         'prefix' => 'permission',
